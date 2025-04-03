@@ -41,7 +41,7 @@ const MapComponent = () => {
   const [end, setEnd] = useState(''); // End location as a string
   const [isRequestingDirections, setIsRequestingDirections] = useState(false);
   const [distance, setDistance] = useState(null); // Distance in meters
-  const [emissions, setEmissions] = useState(null); // Carbon emissions
+  const [emissions, setEmissions] = useState(0); // Carbon emissions
   const [costs, setCosts] = useState(null); // Cost for different modes
   const [durationsByMode, setDurationsByMode] = useState(null); // Duration for each mode
   const [selectedVehicle, setSelectedVehicle] = useState('car'); // Default to 'car'
