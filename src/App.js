@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import './componets/styles.css';
+import './components/styles.css';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
