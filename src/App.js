@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import '/Users/joshuazhao/Documents/TravelBuddy2/ecovoyage-app/src/components/styles.css'; // Import the CSS
+import '/styles.css'; // Import the CSS
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
