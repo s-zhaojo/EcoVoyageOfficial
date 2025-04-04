@@ -133,11 +133,11 @@ const MapComponent = () => {
         </div>
         <div className="card">
           <h3>Total Cost</h3>
-          <p>${distInMiles * transportationCosts.car}</p>
+          <p>${distance / 1000} km / {distance * 0.000621371 * transportationCosts.car}</p>
         </div>
         <div className="card">
           <h3>Total CO2 Emissions</h3>
-          <p>{distInMiles * carbonEmissions.car} kg CO2</p>
+          <p>{distance / 1000} km / {distance * 0.000621371 * carbonEmissions.car} kg CO2</p>
         </div>
     </div> 
     
