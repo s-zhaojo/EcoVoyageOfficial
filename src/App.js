@@ -89,7 +89,7 @@ const MapComponent = () => {
         const speed = speeds[mode]; // speed in mph
         const durationInHours = distInMiles / speed; // duration in hours
         modeDurations[mode] = `${(durationInHours).toFixed(2)} hours`; // Convert to string with 2 decimal places
-      });
+      }); 
 
       setDurationsByMode(modeDurations);
 
@@ -133,11 +133,11 @@ const MapComponent = () => {
         </div>
         <div className="card">
           <h3>Total Cost</h3>
-          <p>${distance / 1000} km / {distance * 0.000621371 * transportationCosts.car}</p>
+          <p>${distance / 1000}/ {costs && selectedVehicle in costs ? costs[selectedVehicle].toFixed(2) : '0.00'}</p>
         </div>
         <div className="card">
           <h3>Total CO2 Emissions</h3>
-          <p>{distance / 1000} km / {distance * 0.000621371 * carbonEmissions.car} kg CO2</p>
+          <p>{distance / 1000}/ {emissions && selectedVehicle in emissions ? emissions[selectedVehicle].toFixed(2) : '0.00'} kg CO2</p>
         </div>
     </div> 
     
