@@ -133,11 +133,11 @@ const MapComponent = () => {
         </div>
         <div className="card">
           <h3>Total Cost</h3>
-          <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : 'N/A'}</p>
+          <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
         </div>
         <div className="card">
           <h3>Total CO2 Emissions</h3>
-          <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : 'N/A'}</p>
+          <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
         </div>
     </div> 
     
