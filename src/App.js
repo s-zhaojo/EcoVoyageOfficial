@@ -35,6 +35,14 @@ const speeds = {
   airplane: 500, // mph (assuming long-distance)
 };
 
+function loginComponent() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setLoggedIn(!loggedIn);
+  }
+}
+
 const MapComponent = () => {
   const [directions, setDirections] = useState(null);
   const [start, setStart] = useState(''); // Start location as a string
@@ -123,6 +131,9 @@ const MapComponent = () => {
 
 
   return (
+    <div>
+      <button onClick=handleLogin()>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+    </div>
     <div className="container">
       {/* Sidebar */}
       <div className="sidebar">
