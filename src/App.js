@@ -150,11 +150,7 @@ const MapComponent = () => {
           <h3>Total CO2 Emissions</h3>
           <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
         </div>
-        <div className="card">
-          <h3>Total CO2 Emissions</h3>
-        </div>
-
-        </div> 
+    </div> 
     
 
       {/* Main Content */}
