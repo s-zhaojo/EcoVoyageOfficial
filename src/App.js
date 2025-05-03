@@ -131,13 +131,13 @@ const MapComponent = () => {
 
 
   return (
+  <>
     <div>
       <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
     </div>
     <div className="container">
       {/* Sidebar */}
       <div className="sidebar">
-
         <div className="card">
           <h3>Total Distance</h3>
           <p>{distance / 1000} km / {distance * 0.000621371} miles</p>
