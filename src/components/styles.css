@@ -69,6 +69,64 @@ body {
     width: 200px;
 }
 
+/* User profile card styles */
+.user-profile-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-profile-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.user-profile-card h1 {
+    margin: 15px 0;
+    font-size: 24px;
+}
+
+.user-profile-card .title {
+    font-size: 16px;
+    color: #777;
+}
+
+.user-profile-card .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.user-profile-card .social-icons a {
+    color: #777;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.user-profile-card .social-icons a:hover {
+    color: #4CAF50;
+}
+
+.user-profile-card button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.user-profile-card button:hover {
+    background-color: #45a049;
+}
+
 .main-content {
     margin-left: 270px;
     padding: 20px;
@@ -164,4 +222,18 @@ button:hover {
     background-color: #388e3c;
 }
 
+/* Login Button Styles */
+button {
+    background-color: #4CAF50; /* Green for login/logout button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
 
+button:hover {
+    background-color: #388e3c;
+}
