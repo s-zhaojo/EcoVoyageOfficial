@@ -163,3 +163,48 @@ button:hover {
 .travel-mode-buttons .selected {
     background-color: #388e3c;
 }
+
+.profile-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: 20px auto;
+  text-align: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profile-card .title {
+  color: grey;
+  font-size: 18px;
+}
+
+.profile-card button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px;
+  color: white;
+  background-color: #4CAF50;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.profile-card button:hover {
+  background-color: #45a049;
+}
+
+.profile-card .social-icons a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+  margin: 0 10px;
+}
+
+.profile-card .social-icons a:hover {
+  opacity: 0.7;
+}
