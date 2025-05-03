@@ -36,10 +36,10 @@ const speeds = {
 };
 
 function loginComponent() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    setLoggedIn(!isLoggedIn);
+    setLoggedIn(!loggedIn);
   }
 }
 
