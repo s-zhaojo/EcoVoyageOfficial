@@ -1,5 +1,15 @@
-import React, { useState } from 'react';
-import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
+import React,
+{
+  useState
+}
+from 'react';
+import {
+  GoogleMap,
+  LoadScript,
+  DirectionsService,
+  DirectionsRenderer
+}
+from '@react-google-maps/api';
 import './components/styles.css';
 
 const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
@@ -34,25 +44,25 @@ const speeds = {
 };
 
 function MapComponent() {
-  const [directions, setDirections] = useState(null);
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-  const [isRequestingDirections, setIsRequestingDirections] = useState(false);
-  const [distance, setDistance] = useState(null);
-  const [emissions, setEmissions] = useState('car');
-  const [costs, setCosts] = useState(null);
-  const [durationsByMode, setDurationsByMode] = useState(null);
-  const [selectedVehicle, setSelectedVehicle] = useState('car');
-  const [totalDistance, setTotalDistance] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
-  const [totalEmissions, setTotalEmissions] = useState(0);
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const[directions, setDirections] = useState(null);
+  const[start, setStart] = useState('');
+  const[end, setEnd] = useState('');
+  const[isRequestingDirections, setIsRequestingDirections] = useState(false);
+  const[distance, setDistance] = useState(null);
+  const[emissions, setEmissions] = useState('car');
+  const[costs, setCosts] = useState(null);
+  const[durationsByMode, setDurationsByMode] = useState(null);
+  const[selectedVehicle, setSelectedVehicle] = useState('car');
+  const[totalDistance, setTotalDistance] = useState(0);
+  const[totalCost, setTotalCost] = useState(0);
+  const[totalEmissions, setTotalEmissions] = useState(0);
+  const[isLoggedIn, setLoggedIn] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = () = >{
     setLoggedIn(!isLoggedIn);
   };
 
-  const handleDirectionsResponse = (result, status) => {
+  const handleDirectionsResponse = (result, status) = >{
     if (status === 'OK') {
       setDirections(result);
       const route = result.routes[0];
@@ -83,10 +93,13 @@ function MapComponent() {
       setCosts(modeCosts);
 
       const modeDurations = {};
-      Object.keys(speeds).forEach((mode) => {
+      Object.keys(speeds).forEach((mode) = >{
         const speed = speeds[mode];
         const durationInHours = distInMiles / speed;
-        modeDurations[mode] = `${durationInHours.toFixed(2)} hours`;
+        modeDurations[mode] = `$ {
+          durationInHours.toFixed(2)
+        }
+        hours`;
       });
 
       setDurationsByMode(modeDurations);
@@ -97,7 +110,7 @@ function MapComponent() {
     setIsRequestingDirections(false);
   };
 
-  const requestDirections = () => {
+  const requestDirections = () = >{
     if (!start || !end) {
       alert('Please enter both start and end locations.');
       return;
@@ -110,7 +123,7 @@ function MapComponent() {
     setDurationsByMode(null);
   };
 
-  const handleModeSelect = (mode) => {
+  const handleModeSelect = (mode) = >{
     if (emissions && emissions[selectedVehicle]) {
       setTotalDistance(totalDistance + distance / 1000);
       setTotalCost(totalCost + costs[selectedVehicle]);
@@ -118,76 +131,85 @@ function MapComponent() {
     }
   };
 
-  return (
-    <div>
-      <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+  return ( < div > <button onClick = {
+    handleLogin
+  } > {
+    isLoggedIn ? 'Log Out': 'Log In'
+  } < /button>
       <div className="container">
         <div className="sidebar">
           <div className="card">
-            <h3>Total Distance</h3>
-            <p>{distance / 1000} km / {distance * 0.000621371} miles</p>
-          </div>
+            <h3>Total Distance</h3 > <p > {
+    distance / 1000
+  }
+  km / {
+    distance * 0.000621371
+  }
+  miles < /p>
+          </div > <div className = "card" > <h3 > Total Cost < /h3>
+            <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p > </div>
           <div className="card">
-            <h3>Total Cost</h3>
-            <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
-          </div>
-          <div className="card">
-            <h3>Total CO2 Emissions</h3>
-            <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
-          </div>
-        </div>
+            <h3>Total CO2 Emissions</h3 > <p > {
+    emissions && emissions[selectedVehicle] ? `$ {
+      emissions[selectedVehicle].toFixed(2)
+    }
+    kg CO2`: '0 kg CO2'
+  } < /p>
+          </div > </div>
         <div className="main-content">
           <div className="header">
-            <h1>EcoVoyage</h1>
-            <div className="input-container">
-              <input
-                className="search-bar"
-                type="text"
-                placeholder="Start Location (e.g., San Francisco, CA)"
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
-              />
+            <h1>EcoVoyage</h1 > <div className = "input-container" > <input className = "search-bar"type = "text"placeholder = "Start Location (e.g., San Francisco, CA)"value = {
+    start
+  }
+  onChange = { (e) = >setStart(e.target.value)
+  }
+  />
               <input
                 className="search-bar"
                 type="text"
                 placeholder="End Location (e.g., Los Angeles, CA)"
                 value={end}
                 onChange={(e) => setEnd(e.target.value)}
-              />
-              <label htmlFor="vehicle">Vehicle type:</label>
+              / > <label htmlFor = "vehicle" > Vehicle type: </label>
               <select
                 name="vehicle"
                 id="vehicle"
                 value={selectedVehicle}
                 onChange={(e) => setSelectedVehicle(e.target.value)}
               >
-                <option value="car">Car</option>
-                <option value="truck">Truck</option>
-                <option value="bus">Bus</option>
-                <option value="motorcycle">Motorcycle</option>
-                <option value="airplane">Airplane</option>
-              </select>
-              <button onClick={() => { requestDirections(); handleModeSelect(selectedVehicle); }}>Get Directions</button>
-            </div>
-          </div>
-          <div className="map-container">
-            <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-              <GoogleMap
-                mapContainerStyle={container
-::contentReference[oaicite:0]{index=0}
-                   mapContainerStyle={containerStyle}
-                center={{ lat: 37.7749, lng: -122.4194 }}
-                zoom={10}
-              >
-                {isRequestingDirections && start && end && (
-                  <DirectionsService
-                    options={{
-                      destination: end,
-                      origin: start,
-                      travelMode: 'DRIVING',
-                    }}
-                    callback={handleDirectionsResponse}
-                  />
+                <option value="car">Car</option > <option value = "truck" > Truck < /option>
+                <option value="bus">Bus</option > <option value = "motorcycle" > Motorcycle < /option>
+                <option value="airplane">Airplane</option > </select>
+              <button onClick={() => { requestDirections(); handleModeSelect(selectedVehicle); }}>Get Directions</button > </div>
+          </div > <div className = "map-container" > <LoadScript googleMapsApiKey = {
+    GOOGLE_MAPS_API_KEY
+  } > <GoogleMap mapContainerStyle = {
+    container: :contentReference[oaicite: 0] {
+      index = 0
+    }
+    mapContainerStyle = {
+      containerStyle
+    }
+    center = {
+      {
+        lat: 37.7749,
+        lng: -122.4194
+      }
+    }
+    zoom = {
+      10
+    } > {
+      isRequestingDirections && start && end && ( < DirectionsService options = {
+        {
+          destination: end,
+          origin: start,
+          travelMode: 'DRIVING',
+        }
+      }
+      callback = {
+        handleDirectionsResponse
+      }
+      />
                 )}
                 {directions && (
                   <DirectionsRenderer
@@ -198,87 +220,75 @@ function MapComponent() {
                         strokeWeight: 5,
                       },
                     }}
-                  />
-                )}
-              </GoogleMap>
-            </LoadScript>
-          </div>
+                  / > )
+    } < /GoogleMap>
+            </LoadScript > </div>
 
           <div className="trip-details">
             {directions && (
               <>
                 <div className="card">
-                  <h3>Distance</h3>
-                  <div className="section-title">
-                    <span>Distance:</span>
+                  <h3>Distance</h3 > <div className = "section-title" > <span > Distance: </span>
                     <span className="section-value">
-                      {distance / 1000} km / {distance * 0.000621371} miles
-                    </span>
-                  </div>
-                </div>
+                      {distance /1000
+  }
+  km / {
+    distance * 0.000621371
+  }
+  miles < /span>
+                  </div > </div>
 
                 <div className="card">
-                  <h3>Carbon Emissions (in kg CO2)</h3>
-                  <ul>
-                    {Object.keys(emissions).map((mode) => (
-                      <li key={mode}>
-                        <span className="section-title">{mode.charAt(0).toUpperCase() + mode.slice(1)}:</span>
-                        <span className="section-value">{emissions[mode].toFixed(2)} kg CO2</span>
-                      </li>
+                  <h3>Carbon Emissions (in kg CO2)</h3 > <ul > {
+    Object.keys(emissions).map((mode) = >( < li key = {
+      mode
+    } > <span className = "section-title" > {
+      mode.charAt(0).toUpperCase() + mode.slice(1)
+    }: </span>
+                        <span className="section-value">{emissions[mode].toFixed(2)} kg CO2</span > </li>
                     ))}
-                  </ul>
-                </div>
+                  </ul > </div>
 
                 <div className="card">
-                  <h3>Estimated Costs</h3>
-                  <ul>
-                    {Object.keys(costs).map((mode) => (
-                      <li key={mode}>
-                        <span className="section-title">{mode.charAt(0).toUpperCase() + mode.slice(1)}:</span>
-                        <span className="section-value">${costs[mode].toFixed(2)}</span>
-                      </li>
+                  <h3>Estimated Costs</h3 > <ul > {
+      Object.keys(costs).map((mode) = >( < li key = {
+        mode
+      } > <span className = "section-title" > {
+        mode.charAt(0).toUpperCase() + mode.slice(1)
+      }: </span>
+                        <span className="section-value">${costs[mode].toFixed(2)}</span > </li>
                     ))}
-                  </ul>
-                </div>
+                  </ul > </div>
 
                 <div className="card">
-                  <h3>Duration</h3>
-                  <ul>
-                    {Object.keys(durationsByMode).map((mode) => (
-                      <li key={mode}>
-                        <span className="section-title">{mode.charAt(0).toUpperCase() + mode.slice(1)}:</span>
-                        <span className="section-value">{durationsByMode[mode]}</span>
-                      </li>
+                  <h3>Duration</h3 > <ul > {
+        Object.keys(durationsByMode).map((mode) = >( < li key = {
+          mode
+        } > <span className = "section-title" > {
+          mode.charAt(0).toUpperCase() + mode.slice(1)
+        }: </span>
+                        <span className="section-value">{durationsByMode[mode]}</span > </li>
                     ))}
-                  </ul>
-                </div>
-              </>
-            )}
+                  </ul > </div>
+              </ > )
+      }
 
-            {/* Profile Card */}
-            <div className="profile-card">
-              <img
-                src="https://static.wikia.nocookie.net/smashremixipedia/images/6/60/Link_SSBR.png"
-                alt="Link Profile"
-                style={{ width: '100%', borderRadius: '10px' }}
-              />
-              <h1>Link</h1>
-              <p className="title">Hero of Hyrule</p>
-              <p>Nintendo Universe</p>
-              <div className="social-icons">
-                <a href="#"><i className="fa fa-dribbble"></i></a>
-                <a href="#"><i className="fa fa-twitter"></i></a>
-                <a href="#"><i className="fa fa-linkedin"></i></a>
-                <a href="#"><i className="fa fa-facebook"></i></a>
-              </div>
-              <p><button>Contact</button></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+      {
+        /* Profile Card */
+      } < div className = "profile-card" > <img src = "https://static.wikia.nocookie.net/smashremixipedia/images/6/60/Link_SSBR.png"alt = "Link Profile"style = {
+        {
+          width: '100%',
+          borderRadius: '10px'
+        }
+      }
+      />
+              <h1>Link</h1 > <p className = "title" > Hero of Hyrule < /p>
+              <p>Nintendo Universe</p > <div className = "social-icons" > <a href = "#" > <i className = "fa fa-dribbble" > </i></a > <a href = "#" > <i className = "fa fa-twitter" > </i></a > <a href = "#" > <i className = "fa fa-linkedin" > </i></a > <a href = "#" > <i className = "fa fa-facebook" > </i></a > </div>
+              <p><button>Contact</button > </p>
+            </div > </div>
+        </div > </div>
+    </div > );
+    }
 
-export default MapComponent;
-
+    export
+  default MapComponent;
