@@ -4,6 +4,8 @@ import './components/styles.css';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
+
+
 const containerStyle = {
   width: '100%',
   height: '60vh', // Same height for the map as before
@@ -33,7 +35,6 @@ const speeds = {
   airplane: 500, // mph (assuming long-distance)
 };
 
-// Login Component to handle user login/logout
 function loginComponent() {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
@@ -99,6 +100,7 @@ const MapComponent = () => {
       });
 
       setDurationsByMode(modeDurations);
+
     } else {
       console.error('Error fetching directions:', status);
       alert('Failed to fetch directions. Please check your locations.');
@@ -127,189 +129,181 @@ const MapComponent = () => {
     }
   };
 
+
   return (
     <div>
-      <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
-      <div className="container">
-        {/* Sidebar */}
-        <div className="sidebar">
-          <div className="card">
-            <h3>Total Distance</h3>
-            <p>{distance / 1000} km / {distance * 0.000621371} miles</p>
-          </div>
-          <div className="card">
-            <h3>Total Cost</h3>
-            <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
-          </div>
-          <div className="card">
-            <h3>Total CO2 Emissions</h3>
-            <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
+      <button onClick=handleLogin()>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+    </div>
+    <div className="container">
+      {/* Sidebar */}
+      <div className="sidebar">
+
+        <div className="card">
+          <h3>Total Distance</h3>
+          <p>{distance / 1000} km / {distance * 0.000621371} miles</p>
+        </div>
+        <div className="card">
+          <h3>Total Cost</h3>
+          <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
+        </div>
+        <div className="card">
+          <h3>Total CO2 Emissions</h3>
+          <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
+        </div>
+    </div> 
+    
+
+      {/* Main Content */}
+      <div className="main-content">
+        <div className="header">
+          <h1>EcoVoyage</h1>
+          <div className="input-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Start Location (e.g., San Francisco, CA)"
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
+            />
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="End Location (e.g., Los Angeles, CA)"
+              value={end}
+              onChange={(e) => setEnd(e.target.value)}
+            />
+
+            <label for="vehicle">Vehicle type:</label>
+            <select name="vehicle" id="vehicle" value={selectedVehicle} 
+            onChange={(e) => setSelectedVehicle(e.target.value)}
+          >
+            <option value="car">Car</option>
+            <option value="truck">Truck</option>
+            <option value="bus">Bus</option>
+            <option value="motorcycle">Motorcycle</option>
+            <option value="airplane">Airplane</option>
+          </select>
+
+
+            <button onClick={() => {requestDirections();handleModeSelect(selectedVehicle);}}>Get Directions</button>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="main-content">
-          <div className="header">
-            <h1>EcoVoyage</h1>
-            <div className="input-container">
-              <input
-                className="search-bar"
-                type="text"
-                placeholder="Start Location (e.g., San Francisco, CA)"
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
-              />
-              <input
-                className="search-bar"
-                type="text"
-                placeholder="End Location (e.g., Los Angeles, CA)"
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
-              />
+        <div className="map-container">
+          <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={{ lat: 37.7749, lng: -122.4194 }} // Set static initial center
+              zoom={10} // Keep zoom level static
+            >
+              {isRequestingDirections && start && end && (
+                <DirectionsService
+                  options={{
+                    destination: end,
+                    origin: start,
+                    travelMode: 'DRIVING',
+                  }}
+                  callback={handleDirectionsResponse}
+                />
+              )}
+              {directions && (
+                <DirectionsRenderer
+                  directions={directions}
+                  options={{
+                    polylineOptions: {
+                      strokeColor: '#4CAF50', // Green color for the route line
+                      strokeWeight: 5,
+                    },
+                  }}
+                />
+              )}
+            </GoogleMap>
+          </LoadScript>
+        </div>
 
-              <label htmlFor="vehicle">Vehicle type:</label>
-              <select
-                name="vehicle"
-                id="vehicle"
-                value={selectedVehicle}
-                onChange={(e) => setSelectedVehicle(e.target.value)}
-              >
-                <option value="car">Car</option>
-                <option value="truck">Truck</option>
-                <option value="bus">Bus</option>
-                <option value="motorcycle">Motorcycle</option>
-                <option value="airplane">Airplane</option>
-              </select>
-
-              <button onClick={() => { requestDirections(); handleModeSelect(selectedVehicle); }}>Get Directions</button>
+        <div className="trip-details">
+          {directions && (
+            <div className="card">
+              <h3>Distance</h3>
+              <div className="section-title">
+                <span>Distance:</span>
+                <span className="section-value">
+                  {distance / 1000} km / {distance * 0.000621371} miles
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Profile Section */}
-          <div className="user-profile-card">
-            <img src="https://www.zeldawiki.wiki/images/e/e7/Link_Artwork.png" alt="Link" style={{ width: '100px', borderRadius: '50%' }} />
-            <h1>Link</h1>
-            <p className="title">Hero of Hyrule</p>
-            <p>Legend of Zelda</p>
-            <button>Contact</button>
-          </div>
+          {directions && (
+            <div className="card">
+              <h3>Carbon Emissions (in kg CO2)</h3>
+              <ul>
+                {Object.keys(emissions).map((mode) => (
+                  <li key={mode}>
+                    <span className="section-title">
+                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
+                    </span>
+                    <span className="section-value">
+                      {emissions[mode].toFixed(2)} kg CO2
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className="map-container">
-            <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={{ lat: 37.7749, lng: -122.4194 }} // Set static initial center
-                zoom={10} // Keep zoom level static
-              >
-                {isRequestingDirections && start && end && (
-                  <DirectionsService
-                    options={{
-                      destination: end,
-                      origin: start,
-                      travelMode: 'DRIVING',
-                    }}
-                    callback={handleDirectionsResponse}
-                  />
-                )}
-                {directions && (
-                  <DirectionsRenderer
-                    directions={directions}
-                    options={{
-                      polylineOptions: {
-                        strokeColor: '#4CAF50', // Green color for the route line
-                        strokeWeight: 5,
-                      },
-                    }}
-                  />
-                )}
-              </GoogleMap>
-            </LoadScript>
-          </div>
+          {directions && (
+            <div className="card">
+              <h3>Estimated Costs</h3>
+              <ul>
+                {Object.keys(costs).map((mode) => (
+                  <li key={mode}>
+                    <span className="section-title">
+                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
+                    </span>
+                    <span className="section-value">${costs[mode].toFixed(2)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          {/* Trip Details */}
-          <div className="trip-details">
-            {directions && (
-              <div className="card">
-                <h3>Distance</h3>
-                <div className="section-title">
-                  <span>Distance:</span>
-                  <span className="section-value">
-                    {distance / 1000} km / {distance * 0.000621371} miles
-                  </span>
-                </div>
-              </div>
-            )}
+          {directions && (
+            <div className="card">
+              <h3>Duration</h3>
+              <ul>
+                {durationsByMode && Object.keys(durationsByMode).map((mode) => (
+                  <li key={mode}>
+                    <span className="section-title">
+                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
+                    </span>
+                    <span className="section-value">{durationsByMode[mode]}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-            {directions && (
-              <div className="card">
-                <h3>Carbon Emissions (in kg CO2)</h3>
-                <ul>
-                  {Object.keys(emissions).map((mode) => (
-                    <li key={mode}>
-                      <span className="section-title">
-                        {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                      </span>
-                      <span className="section-value">
-                        {emissions[mode].toFixed(2)} kg CO2
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {directions && (
-              <div className="card">
-                <h3>Estimated Costs</h3>
-                <ul>
-                  {Object.keys(costs).map((mode) => (
-                    <li key={mode}>
-                      <span className="section-title">
-                        {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                      </span>
-                      <span className="section-value">${costs[mode].toFixed(2)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {directions && (
-              <div className="card">
-                <h3>Duration</h3>
-                <ul>
-                  {durationsByMode && Object.keys(durationsByMode).map((mode) => (
-                    <li key={mode}>
-                      <span className="section-title">
-                        {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                      </span>
-                      <span className="section-value">{durationsByMode[mode]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Travel Mode Selection */}
-            {directions && (
-              <div className="card">
-                <h3>Select Mode of Transport</h3>
-                <ul>
-                  {Object.keys(speeds).map((mode) => (
-                    <li key={mode}>
-                      <button onClick={() => handleModeSelect(selectedVehicle)}>
-                        {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          {/* Travel Mode Selection */}
+          {directions && (
+            <div className="card">
+              <h3>Select Mode of Transport</h3>
+              <ul>
+                {Object.keys(speeds).map((mode) => (
+                  <li key={mode}>
+                    <button onClick={() => handleModeSelect(selectedVehicle)}>
+                      {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 
 export default MapComponent;
