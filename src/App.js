@@ -151,9 +151,14 @@ const MapComponent = () => {
           <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
         </div>
         <div className="card">
-            <h3>Total CO2 Emissions</h3>
-            <img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/4065648.png" alt="CO2 Emission Icon" style={{ width: '100px', height: 'auto' }} />
+          <h3>Total CO2 Emissions</h3>
+          <img
+            src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/4065648.png"
+            alt="CO2 Emission Icon"
+            style={{ width: '100px', height: 'auto' }}
+            />
         </div>
+
         </div> 
     
 
