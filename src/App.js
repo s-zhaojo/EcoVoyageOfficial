@@ -132,7 +132,7 @@ const MapComponent = () => {
 
   return (
     <div>
-      <button onClick=handleLogin()>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+      <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
     </div>
     <div className="container">
       {/* Sidebar */}
