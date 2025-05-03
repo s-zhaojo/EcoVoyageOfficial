@@ -1,309 +1,186 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import './components/styles.css';
+import './styles.css';
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
-
-
+const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
 
 const containerStyle = {
   width: '100%',
-  height: '60vh', // Same height for the map as before
+  height: '60vh',
 };
 
 const carbonEmissions = {
-  car: 0.411, // kg CO2 per mile for a car
-  truck: 1.3, // kg CO2 per mile for a truck
-  bus: 0.089, // kg CO2 per mile for a bus
-  motorcycle: 0.16, // kg CO2 per mile for a motorcycle
-  airplane: 0.255, // kg CO2 per mile for an airplane (only for long trips)
+  car: 0.411,
+  truck: 1.3,
+  bus: 0.089,
+  motorcycle: 0.16,
+  airplane: 0.255,
 };
 
 const transportationCosts = {
-  car: 0.13, // $ per mile for a car (avg gas price)
-  truck: 0.25, // $ per mile for a truck
-  bus: 0.05, // $ per mile for a bus
-  motorcycle: 0.08, // $ per mile for a motorcycle
-  airplane: 0.15, // $ per mile for an airplane (only for long trips)
+  car: 0.13,
+  truck: 0.25,
+  bus: 0.05,
+  motorcycle: 0.08,
+  airplane: 0.15,
 };
 
 const speeds = {
-  car: 60, // mph
-  truck: 50, // mph
-  bus: 30, // mph
-  motorcycle: 70, // mph
-  airplane: 500, // mph (assuming long-distance)
+  car: 60,
+  truck: 50,
+  bus: 30,
+  motorcycle: 70,
+  airplane: 500,
 };
 
-function loginComponent() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(!isLoggedIn);
-  }
-}
-
-const MapComponent = () => {
+function MapComponent() {
   const [directions, setDirections] = useState(null);
-  const [start, setStart] = useState(''); // Start location as a string
-  const [end, setEnd] = useState(''); // End location as a string
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
   const [isRequestingDirections, setIsRequestingDirections] = useState(false);
-  const [distance, setDistance] = useState(null); // Distance in meters
-  const [emissions, setEmissions] = useState('car'); // Carbon emissions
-  const [costs, setCosts] = useState(null); // Cost for different modes
-  const [durationsByMode, setDurationsByMode] = useState(null); // Duration for each mode
-  const [selectedVehicle, setSelectedVehicle] = useState('car'); // Default to 'car'
-
-  // Add state for total values
+  const [distance, setDistance] = useState(null);
+  const [emissions, setEmissions] = useState({});
+  const [costs, setCosts] = useState({});
+  const [durationsByMode, setDurationsByMode] = useState({});
+  const [selectedVehicle, setSelectedVehicle] = useState('car');
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [totalEmissions, setTotalEmissions] = useState(0);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = () => setLoggedIn(!isLoggedIn);
 
   const handleDirectionsResponse = (result, status) => {
     if (status === 'OK') {
       setDirections(result);
       const route = result.routes[0];
-      const distInMeters = route.legs[0].distance.value; // distance in meters
-      const distInKm = distInMeters / 1000; // Convert meters to kilometers
-      const distInMiles = distInKm * 0.621371; // Convert kilometers to miles
+      const distInMeters = route.legs[0].distance.value;
+      const distInKm = distInMeters / 1000;
+      const distInMiles = distInKm * 0.621371;
 
       setDistance(distInMeters);
 
-      // Calculate emissions for each mode of transport
-      const modeEmissions = {
-        car: distInMiles * carbonEmissions.car,
-        truck: distInMiles * carbonEmissions.truck,
-        bus: distInMiles * carbonEmissions.bus,
-        motorcycle: distInMiles * carbonEmissions.motorcycle,
-        airplane: distInMiles * carbonEmissions.airplane, // Assuming it's a long-distance trip
-      };
-
-      setEmissions(modeEmissions);
-
-      // Calculate costs for each mode of transport
-      const modeCosts = {
-        car: distInMiles * transportationCosts.car,
-        truck: distInMiles * transportationCosts.truck,
-        bus: distInMiles * transportationCosts.bus,
-        motorcycle: distInMiles * transportationCosts.motorcycle,
-        airplane: distInMiles * transportationCosts.airplane, // Assuming it's a long-distance trip
-      };
-
-      setCosts(modeCosts);
-
-      // Calculate duration for each mode of transport
+      const modeEmissions = {};
+      const modeCosts = {};
       const modeDurations = {};
-      Object.keys(speeds).forEach((mode) => {
-        const speed = speeds[mode]; // speed in mph
-        const durationInHours = distInMiles / speed; // duration in hours
-        modeDurations[mode] = `${(durationInHours).toFixed(2)} hours`; // Convert to string with 2 decimal places
+
+      Object.keys(carbonEmissions).forEach((mode) => {
+        modeEmissions[mode] = distInMiles * carbonEmissions[mode];
+        modeCosts[mode] = distInMiles * transportationCosts[mode];
+        modeDurations[mode] = `${(distInMiles / speeds[mode]).toFixed(2)} hours`;
       });
 
+      setEmissions(modeEmissions);
+      setCosts(modeCosts);
       setDurationsByMode(modeDurations);
-
     } else {
-      console.error('Error fetching directions:', status);
-      alert('Failed to fetch directions. Please check your locations.');
+      console.error('Directions error:', status);
+      alert('Failed to fetch directions.');
     }
-    setIsRequestingDirections(false); // Stop the directions request process after the response
+    setIsRequestingDirections(false);
   };
 
   const requestDirections = () => {
-    if (!start || !end) {
-      alert('Please enter both start and end locations.');
-      return;
-    }
-    setIsRequestingDirections(true); // Start directions request
-    setDirections(null); // Clear previous directions
-    setDistance(null); // Clear previous distance
-    setEmissions(null); // Clear previous emissions
-    setCosts(null); // Clear previous costs
-    setDurationsByMode(null); // Clear previous durations
+    if (!start || !end) return alert('Please enter both start and end locations.');
+    setIsRequestingDirections(true);
+    setDirections(null);
+    setDistance(null);
+    setEmissions({});
+    setCosts({});
+    setDurationsByMode({});
   };
 
-  const handleModeSelect = (mode) => {
-    if (emissions && emissions[selectedVehicle]) {
-      setTotalDistance(totalDistance + (distance / 1000)); // Add distance in km
-      setTotalCost(totalCost + costs[selectedVehicle]); // Add cost for selected mode
-      setTotalEmissions(totalEmissions + emissions[selectedVehicle]); // Add emissions for selected mode
+  const handleModeSelect = () => {
+    if (emissions[selectedVehicle] && costs[selectedVehicle]) {
+      setTotalDistance(prev => prev + distance / 1000);
+      setTotalCost(prev => prev + costs[selectedVehicle]);
+      setTotalEmissions(prev => prev + emissions[selectedVehicle]);
     }
   };
-
 
   return (
     <div>
-      <button onClick=handleLogin()>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
-    </div>
-    <div className="container">
-      {/* Sidebar */}
-      <div className="sidebar">
-
-        <div className="card">
-          <h3>Total Distance</h3>
-          <p>{distance / 1000} km / {distance * 0.000621371} miles</p>
-        </div>
-        <div className="card">
-          <h3>Total Cost</h3>
-          <p>{costs && costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
-        </div>
-        <div className="card">
-          <h3>Total CO2 Emissions</h3>
-          <p>{emissions && emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
-        </div>
-    </div> 
-    
-
-      {/* Main Content */}
-      <div className="main-content">
-        <div className="header">
-          <h1>EcoVoyage</h1>
-          <div className="input-container">
-            <input
-              className="search-bar"
-              type="text"
-              placeholder="Start Location (e.g., San Francisco, CA)"
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-            />
-            <input
-              className="search-bar"
-              type="text"
-              placeholder="End Location (e.g., Los Angeles, CA)"
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-            />
-
-            <label for="vehicle">Vehicle type:</label>
-            <select name="vehicle" id="vehicle" value={selectedVehicle} 
-            onChange={(e) => setSelectedVehicle(e.target.value)}
-          >
-            <option value="car">Car</option>
-            <option value="truck">Truck</option>
-            <option value="bus">Bus</option>
-            <option value="motorcycle">Motorcycle</option>
-            <option value="airplane">Airplane</option>
-          </select>
-
-
-            <button onClick={() => {requestDirections();handleModeSelect(selectedVehicle);}}>Get Directions</button>
+      <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+      <div className="container">
+        <div className="sidebar">
+          <div className="card">
+            <h3>Total Distance</h3>
+            <p>{distance ? `${(distance / 1000).toFixed(2)} km / ${(distance * 0.000621371).toFixed(2)} miles` : 'N/A'}</p>
+          </div>
+          <div className="card">
+            <h3>Total Cost</h3>
+            <p>{costs[selectedVehicle] ? `$${costs[selectedVehicle].toFixed(2)}` : '$0'}</p>
+          </div>
+          <div className="card">
+            <h3>Total CO2 Emissions</h3>
+            <p>{emissions[selectedVehicle] ? `${emissions[selectedVehicle].toFixed(2)} kg CO2` : '0 kg CO2'}</p>
           </div>
         </div>
-
-        <div className="map-container">
-          <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={{ lat: 37.7749, lng: -122.4194 }} // Set static initial center
-              zoom={10} // Keep zoom level static
-            >
-              {isRequestingDirections && start && end && (
-                <DirectionsService
-                  options={{
-                    destination: end,
-                    origin: start,
-                    travelMode: 'DRIVING',
-                  }}
-                  callback={handleDirectionsResponse}
-                />
-              )}
-              {directions && (
-                <DirectionsRenderer
-                  directions={directions}
-                  options={{
-                    polylineOptions: {
-                      strokeColor: '#4CAF50', // Green color for the route line
-                      strokeWeight: 5,
-                    },
-                  }}
-                />
-              )}
-            </GoogleMap>
-          </LoadScript>
-        </div>
-
-        <div className="trip-details">
-          {directions && (
-            <div className="card">
-              <h3>Distance</h3>
-              <div className="section-title">
-                <span>Distance:</span>
-                <span className="section-value">
-                  {distance / 1000} km / {distance * 0.000621371} miles
-                </span>
+        <div className="main-content">
+          <div className="header">
+            <h1>EcoVoyage</h1>
+            <div className="input-container">
+              <input className="search-bar" type="text" placeholder="Start Location" value={start} onChange={(e) => setStart(e.target.value)} />
+              <input className="search-bar" type="text" placeholder="End Location" value={end} onChange={(e) => setEnd(e.target.value)} />
+              <label htmlFor="vehicle">Vehicle:</label>
+              <select id="vehicle" value={selectedVehicle} onChange={(e) => setSelectedVehicle(e.target.value)}>
+                <option value="car">Car</option>
+                <option value="truck">Truck</option>
+                <option value="bus">Bus</option>
+                <option value="motorcycle">Motorcycle</option>
+                <option value="airplane">Airplane</option>
+              </select>
+              <button onClick={() => { requestDirections(); handleModeSelect(); }}>Get Directions</button>
+            </div>
+          </div>
+          <div className="map-container">
+            <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+              <GoogleMap mapContainerStyle={containerStyle} center={{ lat: 37.7749, lng: -122.4194 }} zoom={10}>
+                {isRequestingDirections && start && end && (
+                  <DirectionsService
+                    options={{ destination: end, origin: start, travelMode: 'DRIVING' }}
+                    callback={handleDirectionsResponse}
+                  />
+                )}
+                {directions && (
+                  <DirectionsRenderer
+                    directions={directions}
+                    options={{ polylineOptions: { strokeColor: '#4CAF50', strokeWeight: 5 } }}
+                  />
+                )}
+              </GoogleMap>
+            </LoadScript>
+          </div>
+          <div className="trip-details">
+            {directions && (
+              <>
+                <div className="card"><h3>Distance</h3><p>{(distance / 1000).toFixed(2)} km / {(distance * 0.000621371).toFixed(2)} miles</p></div>
+                <div className="card"><h3>CO2 Emissions</h3><ul>{Object.keys(emissions).map(mode => (
+                  <li key={mode}><strong>{mode}:</strong> {emissions[mode].toFixed(2)} kg CO2</li>))}</ul></div>
+                <div className="card"><h3>Costs</h3><ul>{Object.keys(costs).map(mode => (
+                  <li key={mode}><strong>{mode}:</strong> ${costs[mode].toFixed(2)}</li>))}</ul></div>
+                <div className="card"><h3>Durations</h3><ul>{Object.keys(durationsByMode).map(mode => (
+                  <li key={mode}><strong>{mode}:</strong> {durationsByMode[mode]}</li>))}</ul></div>
+              </>
+            )}
+            <div className="profile-card">
+              <img src="https://static.wikia.nocookie.net/smashremixipedia/images/6/60/Link_SSBR.png" alt="Link" style={{ width: '100%', borderRadius: '10px' }} />
+              <h1>Link</h1>
+              <p className="title">Hero of Hyrule</p>
+              <p>Nintendo Universe</p>
+              <div className="social-icons">
+                <a href="#"><i className="fa fa-dribbble"></i></a>
+                <a href="#"><i className="fa fa-twitter"></i></a>
+                <a href="#"><i className="fa fa-linkedin"></i></a>
+                <a href="#"><i className="fa fa-facebook"></i></a>
               </div>
+              <p><button>Contact</button></p>
             </div>
-          )}
-
-          {directions && (
-            <div className="card">
-              <h3>Carbon Emissions (in kg CO2)</h3>
-              <ul>
-                {Object.keys(emissions).map((mode) => (
-                  <li key={mode}>
-                    <span className="section-title">
-                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                    </span>
-                    <span className="section-value">
-                      {emissions[mode].toFixed(2)} kg CO2
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {directions && (
-            <div className="card">
-              <h3>Estimated Costs</h3>
-              <ul>
-                {Object.keys(costs).map((mode) => (
-                  <li key={mode}>
-                    <span className="section-title">
-                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                    </span>
-                    <span className="section-value">${costs[mode].toFixed(2)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {directions && (
-            <div className="card">
-              <h3>Duration</h3>
-              <ul>
-                {durationsByMode && Object.keys(durationsByMode).map((mode) => (
-                  <li key={mode}>
-                    <span className="section-title">
-                      {mode.charAt(0).toUpperCase() + mode.slice(1)}:
-                    </span>
-                    <span className="section-value">{durationsByMode[mode]}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Travel Mode Selection */}
-          {directions && (
-            <div className="card">
-              <h3>Select Mode of Transport</h3>
-              <ul>
-                {Object.keys(speeds).map((mode) => (
-                  <li key={mode}>
-                    <button onClick={() => handleModeSelect(selectedVehicle)}>
-                      {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
+}
 
 export default MapComponent;
