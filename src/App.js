@@ -306,7 +306,7 @@ const MapComponent = () => {
       <div className="user-profile">
         <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjoshzhao7&psig=AOvVaw2CTZy0nbOoITCKrhmeyR_H&ust=1746328999383000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJiumNGsho0DFQAAAAAdAAAAABAE" alt="John" />
         <h1>John Doe</h1>
-        <p className="title">CEO & Founder, Example</p>
+        <p className="title">CEO & Founder, Example, </p>
         <p>Harvard University</p>
         <div className="icons" style={{ textAlign: 'center' }}>
           <a href="#"><i className="fa fa-dribbble"></i></a>
