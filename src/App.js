@@ -235,6 +235,16 @@ const MapComponent = () => {
                     </span>
                   </div>
                 </div>
+                
+                <div className="card">
+                  <h3>Distance</h3>
+                  <div className="section-title">
+                    <span>Distance:</span>
+                    <span className="section-value">
+                      {distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles
+                    </span>
+                  </div>
+                </div>
 
                 <div className="card">
                   <h3>Carbon Emissions (in kg CO2)</h3>
