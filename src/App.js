@@ -128,8 +128,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
            <div className="card">
-            <h3>Total Distance</h3>
-            <p>{distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles</p>
+            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fman%2F&psig=AOvVaw1-PYwm-z71r8HResxGAvGO&ust=1746659464498000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKiUp9n7j40DFQAAAAAdAAAAABAE" alt="Girl in a jacket" width="500" height="600">
           </div>
           <div className="card">
             <h3>Total Distance</h3>
