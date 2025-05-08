@@ -128,7 +128,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
            <div className="card">
-            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fman%2F&psig=AOvVaw1-PYwm-z71r8HResxGAvGO&ust=1746659464498000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKiUp9n7j40DFQAAAAAdAAAAABAE" alt="Girl in a jacket" width="500" height="600">
+            <img src="https://static.vecteezy.com/system/resources/previews/005/346/410/non_2x/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg" alt="Girl in a jacket" width="500" height="600">
           </div>
           <div className="card">
             <h3>Total Distance</h3>
