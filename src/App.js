@@ -6,7 +6,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api';
 import './components/styles.css';
-import balloon from './images/Balloon.jpg';
+import balloon from './components/images/Balloon.jpg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
