@@ -6,6 +6,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api';
 import './components/styles.css';
+import balloon from './images/Balloon.jpg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
@@ -128,7 +129,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
            <div className="card">
-            <img src="https://m.media-amazon.com/images/I/71ZUydzp4ZL.jpg" alt="BALLOONS" width="500" height="600">
+            <img src={balloon} alt="BALLOONS" width="500" height="600"/>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
