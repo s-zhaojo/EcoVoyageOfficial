@@ -129,7 +129,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
            <div className="card">
-            <img src={balloon} alt="BALLOONS" width="500" height="600"/>
+            <img src={balloon} alt="BALLOONS" width="100%" height="100%"/>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
