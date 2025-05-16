@@ -69,6 +69,12 @@ body {
     width: 200px;
 }
 
+.cardLogo {
+    background-color: black;
+    margin-bottom: 20px;
+    width: 200px;
+}
+
 .main-content {
     margin-left: 270px;
     padding: 20px;
