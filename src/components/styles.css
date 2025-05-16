@@ -72,7 +72,9 @@ body {
 .cardLogo {
     background-color: black;
     margin-bottom: 20px;
-    width: 200px;
+    width: 50px;
+    border-radius: 3%;
+    padding: 10%;
 }
 
 .main-content {
