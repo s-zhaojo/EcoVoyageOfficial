@@ -128,7 +128,7 @@ const MapComponent = () => {
 
       <div className="container">
         <div className="sidebar">
-           <div className="card">
+           <div className="cardLogo">
             <img src={forgeLogo} alt="BALLOONS" width="100%" height="100%"/>
           </div>
           <div className="card">
