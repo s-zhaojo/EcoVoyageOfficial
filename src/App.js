@@ -123,14 +123,12 @@ const MapComponent = () => {
 
   return (
     <div>
-      <button onClick={handleLogin}>
-        {isLoggedIn ? 'Log Out' : 'Log In'}
-      </button>
 
       <div className="container">
         <div className="sidebar">
            <div className="card">
             <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
+            <button onclick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
