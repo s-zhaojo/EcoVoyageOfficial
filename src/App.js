@@ -11,8 +11,7 @@ import forgeLogo from './components/images/waforge logo.svg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
 
-const [isLoggedIn, setLoggedIn] = useState(false);
-const handleLogin = () => setLoggedIn(!isLoggedIn);
+
 
 const containerStyle = {
   width: '100%',
@@ -58,7 +57,8 @@ const MapComponent = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [totalEmissions, setTotalEmissions] = useState(0);
 
-  
+  const [isLoggedIn, setLoggedIn] = useState(0);
+  const handleLogin = () => setLoggedIn(!isLoggedIn);
 
   const handleDirectionsResponse = (result, status) => {
     if (status === 'OK') {
