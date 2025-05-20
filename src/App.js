@@ -9,7 +9,7 @@ import './components/styles.css';
 import balloon from './components/images/Balloon.jpg';
 import forgeLogo from './components/images/waforge logo.svg';
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
+const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
 const containerStyle = {
   width: '100%',
