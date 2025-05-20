@@ -6,7 +6,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api';
 import './components/styles.css';
-import forgeLogo from './components/images/waforge logo.svg';
+import balloon from './components/images/Balloon.jpg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCG4hWf-Cck1E4rNWBtW2tddCqcmfX261A';
 
@@ -128,6 +128,9 @@ const MapComponent = () => {
 
       <div className="container">
         <div className="sidebar">
+           <div className="card">
+            <img src={balloon} alt="BALLOONS" width="100%" height="100%"/>
+          </div>
           <div className="card">
             <h3>Total Distance</h3>
             <p>{distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles</p>
@@ -152,9 +155,6 @@ const MapComponent = () => {
 
         <div className="main-content">
           <div className="header">
-            <div className="cardLogo">
-              <img src={forgeLogo} alt="waforge logo" width="100%" height="100%"/>
-            </div>
             <h1>EcoVoyage</h1>
             <div className="input-container">
               <input
