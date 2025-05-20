@@ -131,17 +131,7 @@ const MapComponent = () => {
         <div className="sidebar">
            <div className="card">
             <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
-            <button
-              onClick={() => {
-              if (!isLoggedIn) {
-                window.location.href = 'https://student.naviance.com/main';
-              } else {
-                handleLogin(); // or handleLogout depending on your logic
-              }
-             }}
-          >
-            {isLoggedIn ? 'Log Out' : 'Log In'}
-        </button>
+            <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
