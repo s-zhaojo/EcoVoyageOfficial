@@ -130,7 +130,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
            <div className="card">
-            <img src={forgeLogo} alt="BALLOONS" width="10%" height="10%"/>
+            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
