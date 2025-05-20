@@ -131,7 +131,9 @@ const MapComponent = () => {
         <div className="sidebar">
            <div className="card">
             <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
-            <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+            <a href="https://student.naviance.com/main">
+              <button>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+            </a>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
