@@ -152,9 +152,6 @@ const MapComponent = () => {
                 : '0 kg CO2'}
             </p>
           </div>
-          <div className="card">
-            <img src={forgeLogo} alt="BALLOONS" width="100%" height="100%"/>
-          </div>
         </div>
 
         <div className="main-content">
