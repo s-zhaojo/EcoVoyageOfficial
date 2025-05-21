@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import React, { Link } from "react";
 import {
   GoogleMap,
   LoadScript,
@@ -335,19 +334,5 @@ const MapComponent = () => {
     </div>
   );
 };
-
-function LoginButton({ isLoggedIn }) {
-  const handleClick = () => {
-    window.location.href = 'https://student.naviance.com/main';
-  };
-
-  return (
-    <button onClick={handleClick}>
-      {isLoggedIn ? 'Log Out' : 'Log In'}
-    </button>
-  );
-}
-
-export default LoginButton;
 
 export default MapComponent;
