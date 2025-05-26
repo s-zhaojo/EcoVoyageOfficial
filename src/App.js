@@ -11,8 +11,6 @@ import forgeLogo from './components/images/waforge logo.svg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
 
-
-
 const containerStyle = {
   width: '100%',
   height: '60vh',
@@ -58,8 +56,22 @@ const MapComponent = () => {
   const [totalEmissions, setTotalEmissions] = useState(0);
 
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const handleLogin = () => setLoggedIn(prev => !prev);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLoginClick = () => {
+    if (isLoggedIn) {
+      setLoggedIn(false);
+    } else {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    setLoggedIn(true);
+    setIsModalOpen(false);
+  };
+
   const handleDirectionsResponse = (result, status) => {
     if (status === 'OK') {
       setDirections(result);
@@ -125,12 +137,13 @@ const MapComponent = () => {
 
   return (
     <div>
-
       <div className="container">
         <div className="sidebar">
-           <div className="card">
-            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
-            <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+          <div className="card">
+            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%" />
+            <button onClick={handleLoginClick}>
+              {isLoggedIn ? 'Log Out' : 'Log In'}
+            </button>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
@@ -232,26 +245,6 @@ const MapComponent = () => {
             {directions && (
               <>
                 <div className="card">
-                  <h3>Distance</h3>
-                  <div className="section-title">
-                    <span>Distance:</span>
-                    <span className="section-value">
-                      {distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="card">
-                  <h3>Distance</h3>
-                  <div className="section-title">
-                    <span>Distance:</span>
-                    <span className="section-value">
-                      {distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles
-                    </span>
-                  </div>
-                </div>
-
-                <div className="card">
                   <h3>Carbon Emissions (in kg CO2)</h3>
                   <ul>
                     {Object.keys(emissions).map((mode) => (
@@ -317,9 +310,8 @@ const MapComponent = () => {
         </div>
       </div>
 
-      {/* User Profile Card */}
       <div className="user-profile">
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjoshzhao7&psig=AOvVaw2CTZy0nbOoITCKrhmeyR_H&ust=1746328999383000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJiumNGsho0DFQAAAAAdAAAAABAE" alt="John" />
+        <img src={balloon} alt="John" />
         <h1>John Doe</h1>
         <p className="title">CEO & Founder, Example, Bob</p>
         <p>Harvard University</p>
@@ -331,6 +323,48 @@ const MapComponent = () => {
         </div>
         <p><button>Contact</button></p>
       </div>
+
+      {isModalOpen && (
+        <div
+          className="modal"
+          onClick={(e) => {
+            if (e.target.className === 'modal') setIsModalOpen(false);
+          }}
+        >
+          <form className="modal-content animate" onSubmit={handleLoginSubmit}>
+            <div className="imgcontainer">
+              <span onClick={() => setIsModalOpen(false)} className="close" title="Close Modal">
+                &times;
+              </span>
+              <img
+                src="https://i.pravatar.cc/150?img=3"
+                alt="Avatar"
+                className="avatar"
+              />
+            </div>
+
+            <div className="login-container">
+              <label htmlFor="uname"><b>Username</b></label>
+              <input type="text" placeholder="Enter Username" name="uname" required />
+
+              <label htmlFor="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" name="psw" required />
+
+              <button type="submit">Login</button>
+              <label>
+                <input type="checkbox" defaultChecked name="remember" /> Remember me
+              </label>
+            </div>
+
+            <div className="login-container" style={{ backgroundColor: '#f1f1f1' }}>
+              <button type="button" onClick={() => setIsModalOpen(false)} className="cancelbtn">
+                Cancel
+              </button>
+              <span className="psw">Forgot <a href="#">password?</a></span>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
