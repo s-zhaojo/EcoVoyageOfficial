@@ -151,8 +151,9 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
           <div className="card">
-            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%" />
-            <button onClick={handleLoginClick}>
+            <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
+            <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
+            <button onClick={handleLoginClick} className="loginButton">
               {isLoggedIn ? 'Log Out' : 'Log In'}
             </button>
           </div>
@@ -365,28 +366,8 @@ const MapComponent = () => {
 
       {/* LOGIN MODAL */}
       {showLoginModal && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: '#fff',
-              padding: 20,
-              borderRadius: 8,
-              minWidth: 300,
-            }}
-          >
+        <div className="loginBG">
+          <div className="loginColor">
             <h2>Login</h2>
             <form onSubmit={handleLoginSubmit}>
               <input
@@ -395,7 +376,7 @@ const MapComponent = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                style={{ width: '100%', marginBottom: 10, padding: 8 }}
+                className="inputText"
               />
               <input
                 type="password"
@@ -403,15 +384,15 @@ const MapComponent = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{ width: '100%', marginBottom: 10, padding: 8 }}
+                className="passwordText"
               />
-              <button type="submit" style={{ marginRight: 10 }}>
+              <button type="submit" className="submitButton">
                 Log In
               </button>
               <button
                 type="button"
                 onClick={() => setShowLoginModal(false)}
-                style={{ backgroundColor: '#ddd' }}
+                className="cancelButton"
               >
                 Cancel
               </button>
