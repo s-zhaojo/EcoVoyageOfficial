@@ -11,6 +11,8 @@ import forgeLogo from './components/images/waforge logo.svg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
 
+let infoWindow;
+
 const containerStyle = {
   width: '100%',
   height: '60vh',
@@ -41,6 +43,7 @@ const speeds = {
 };
 
 const MapComponent = () => {
+  const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [directions, setDirections] = useState(null);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
@@ -71,6 +74,28 @@ const MapComponent = () => {
       setShowLoginModal(true);
     }
   };
+
+  function setLocation() {
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setMapCenter(pos);
+        },
+        () => {
+          alert("error could do pos");
+        },
+      );
+    }
+    
+    else {
+      // Browser doesn't support Geolocation
+      alert("error no suppor pos");
+    }
+}
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -150,6 +175,7 @@ const MapComponent = () => {
     <div>
       <div className="container">
         <div className="sidebar">
+          <button onClick={setLocation}>get loaction</button>
           <div className="card">
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
@@ -229,7 +255,7 @@ const MapComponent = () => {
             <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
               <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={{ lat: 37.7749, lng: -122.4194 }}
+                center={mapCenter}
                 zoom={10}
               >
                 {isRequestingDirections && start && end && (
