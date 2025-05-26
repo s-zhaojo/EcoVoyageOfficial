@@ -11,8 +11,6 @@ import forgeLogo from './components/images/waforge logo.svg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
 
-
-
 const containerStyle = {
   width: '100%',
   height: '60vh',
@@ -57,9 +55,34 @@ const MapComponent = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [totalEmissions, setTotalEmissions] = useState(0);
 
+  // Login state and modal visibility
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const handleLogin = () => setLoggedIn(prev => !prev);
-  
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLoginClick = () => {
+    if (isLoggedIn) {
+      // Logout
+      setLoggedIn(false);
+      setUsername('');
+      setPassword('');
+    } else {
+      setShowLoginModal(true);
+    }
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (username.trim() && password.trim()) {
+      setLoggedIn(true);
+      setShowLoginModal(false);
+      setPassword('');
+    } else {
+      alert('Please enter username and password.');
+    }
+  };
+
   const handleDirectionsResponse = (result, status) => {
     if (status === 'OK') {
       setDirections(result);
@@ -125,16 +148,21 @@ const MapComponent = () => {
 
   return (
     <div>
-
       <div className="container">
         <div className="sidebar">
-           <div className="card">
-            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%"/>
-            <button onClick={handleLogin}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+          <div className="card">
+            <img src={forgeLogo} alt="BALLOONS" width="50%" height="50%" />
+            <button onClick={handleLoginClick}>
+              {isLoggedIn ? 'Log Out' : 'Log In'}
+            </button>
           </div>
           <div className="card">
             <h3>Total Distance</h3>
-            <p>{distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles</p>
+            <p>
+              {distance
+                ? `${(distance / 1000).toFixed(2)} km / ${(distance * 0.000621371).toFixed(2)} miles`
+                : 'N/A'}
+            </p>
           </div>
           <div className="card">
             <h3>Total Cost</h3>
@@ -240,16 +268,6 @@ const MapComponent = () => {
                     </span>
                   </div>
                 </div>
-                
-                <div className="card">
-                  <h3>Distance</h3>
-                  <div className="section-title">
-                    <span>Distance:</span>
-                    <span className="section-value">
-                      {distance / 1000} km / {(distance * 0.000621371).toFixed(2)} miles
-                    </span>
-                  </div>
-                </div>
 
                 <div className="card">
                   <h3>Carbon Emissions (in kg CO2)</h3>
@@ -319,18 +337,88 @@ const MapComponent = () => {
 
       {/* User Profile Card */}
       <div className="user-profile">
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjoshzhao7&psig=AOvVaw2CTZy0nbOoITCKrhmeyR_H&ust=1746328999383000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJiumNGsho0DFQAAAAAdAAAAABAE" alt="John" />
+        <img
+          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjoshzhao7&psig=AOvVaw2CTZy0nbOoITCKrhmeyR_H&ust=1746328999383000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJiumNGsho0DFQAAAAAdAAAAABAE"
+          alt="John"
+        />
         <h1>John Doe</h1>
         <p className="title">CEO & Founder, Example, Bob</p>
         <p>Harvard University</p>
         <div className="icons" style={{ textAlign: 'center' }}>
-          <a href="#"><i className="fa fa-dribbble"></i></a>
-          <a href="#"><i className="fa fa-twitter"></i></a>
-          <a href="#"><i className="fa fa-linkedin"></i></a>
-          <a href="#"><i className="fa fa-facebook"></i></a>
+          <a href="#">
+            <i className="fa fa-dribbble"></i>
+          </a>
+          <a href="#">
+            <i className="fa fa-twitter"></i>
+          </a>
+          <a href="#">
+            <i className="fa fa-linkedin"></i>
+          </a>
+          <a href="#">
+            <i className="fa fa-facebook"></i>
+          </a>
         </div>
-        <p><button>Contact</button></p>
+        <p>
+          <button>Contact</button>
+        </p>
       </div>
+
+      {/* LOGIN MODAL */}
+      {showLoginModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#fff',
+              padding: 20,
+              borderRadius: 8,
+              minWidth: 300,
+            }}
+          >
+            <h2>Login</h2>
+            <form onSubmit={handleLoginSubmit}>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                style={{ width: '100%', marginBottom: 10, padding: 8 }}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{ width: '100%', marginBottom: 10, padding: 8 }}
+              />
+              <button type="submit" style={{ marginRight: 10 }}>
+                Log In
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowLoginModal(false)}
+                style={{ backgroundColor: '#ddd' }}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
