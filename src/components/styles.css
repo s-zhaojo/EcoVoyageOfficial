@@ -323,13 +323,13 @@ img.avatar {
 .inputText {
     width: 100%;
     margin-bottom: 10px;
-    padding-left: 8px;
+    padding: 8px;
 }
 
 .passwordText {
     width: 100%;
     margin-bottom: 10px;
-    padding-left: 8px;
+    padding: 8px;
 }
 
 .submitButton {
