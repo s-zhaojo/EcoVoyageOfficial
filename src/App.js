@@ -85,7 +85,7 @@ const MapComponent = () => {
             lng: position.coords.longitude,
           };
           setMapCenter(pos);
-          setZoom(20);
+          setZoom(16);
         },
         () => {
           alert("error could do pos");
