@@ -44,6 +44,7 @@ const speeds = {
 
 const MapComponent = () => {
   const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
+  const [zoom, setZoom] = useState(10);
   const [directions, setDirections] = useState(null);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
@@ -84,6 +85,7 @@ const MapComponent = () => {
             lng: position.coords.longitude,
           };
           setMapCenter(pos);
+          setZoom(5);
         },
         () => {
           alert("error could do pos");
@@ -256,7 +258,7 @@ const MapComponent = () => {
               <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={mapCenter}
-                zoom={10}
+                zoom={zoom}
               >
                 {isRequestingDirections && start && end && (
                   <DirectionsService
