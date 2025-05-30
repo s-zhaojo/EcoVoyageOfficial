@@ -321,15 +321,15 @@ img.avatar {
 }
 
 .inputText {
-    width: 90%;
+    width: 100%;
     margin-bottom: 10px;
-    padding-left: 5%;
+    padding-left: 8px;
 }
 
 .passwordText {
-    width: 90%;
+    width: 100%;
     margin-bottom: 10px;
-    padding-left: 5%;
+    padding-left: 8px;
 }
 
 .submitButton {
