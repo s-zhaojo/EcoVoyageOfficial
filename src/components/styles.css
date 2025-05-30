@@ -70,7 +70,7 @@ body {
 }
 
 .main-content {
-    margin-left: 270px;
+    margin: 0 270px;
     padding: 20px;
     flex-grow: 1;
 }
