@@ -85,7 +85,7 @@ const MapComponent = () => {
             lng: position.coords.longitude,
           };
           setMapCenter(pos);
-          setZoom(5);
+          setZoom(16);
         },
         () => {
           alert("error could do pos");
@@ -177,8 +177,8 @@ const MapComponent = () => {
     <div>
       <div className="container">
         <div className="sidebar">
-          <button onClick={setLocation}>get loaction</button>
           <div className="card">
+            <button onClick={setLocation}>get loaction</button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
