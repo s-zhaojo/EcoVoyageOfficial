@@ -394,8 +394,28 @@ const MapComponent = () => {
 
       {/* LOGIN MODAL */}
       {showLoginModal && (
-        <div className="loginBG">
-          <div className="loginColor">
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#fff',
+              padding: 20,
+              borderRadius: 8,
+              minWidth: 300,
+            }}
+          >
             <h2>Login</h2>
             <form onSubmit={handleLoginSubmit}>
               <input
@@ -404,7 +424,7 @@ const MapComponent = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                className="inputText"
+                style={{ width: '100%', marginBottom: 10, padding: 8 }}
               />
               <input
                 type="password"
@@ -412,15 +432,15 @@ const MapComponent = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="passwordText"
+                style={{ width: '100%', marginBottom: 10, padding: 8 }}
               />
-              <button type="submit" className="submitButton">
+              <button type="submit" style={{ marginRight: 10 }}>
                 Log In
               </button>
               <button
                 type="button"
                 onClick={() => setShowLoginModal(false)}
-                className="cancelButton"
+                style={{ backgroundColor: '#ddd' }}
               >
                 Cancel
               </button>
