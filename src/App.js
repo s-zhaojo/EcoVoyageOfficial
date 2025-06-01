@@ -178,7 +178,7 @@ const MapComponent = () => {
       <div className="container">
         <div className="sidebar">
           <div className="card">
-            <button onClick={setLocation}>get loaction</button>
+            <button onClick={setLocation}>get location</button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
