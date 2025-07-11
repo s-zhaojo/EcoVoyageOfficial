@@ -219,7 +219,7 @@ const MapComponent = () => {
         <div className="sidebar">
           <div className="card">
             <button onClick={setLocation}>get location</button>
-            <button onClick={() => {alert('You clicked me!');}}></button>
+            <button onClick={() => {useIsMobile()}}></button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
