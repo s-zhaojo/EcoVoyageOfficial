@@ -65,19 +65,23 @@ const MapComponent = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
-  function handleWindowSizeChange() {
-    setWidth(window.innerWidth);
+  const useCheckMobileScreen = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const handleWindowSizeChange = () => {
+          setWidth(window.innerWidth);
   }
+
   useEffect(() => {
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-        window.removeEventListener('resize', handleWindowSizeChange);
-    }
+      window.addEventListener('resize', handleWindowSizeChange);
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange);
+      }
   }, []);
 
-  const isMobile = width <= 768;
+  return (width <= 768);
+  }
+
+  export default useCheckMobileScreen
 
   const handleLoginClick = () => {
     if (isLoggedIn) {
