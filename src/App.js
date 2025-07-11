@@ -43,7 +43,7 @@ const speeds = {
   motorcycle: 70,
   airplane: 500,
 };
-
+/**
 function useIsMobile() {
   // Initialize isMobile state. Default to false for SSR compatibility
   // or until the client-side window object is available.
@@ -80,9 +80,10 @@ function useIsMobile() {
 
   return false;
 }
+*/
 
 function checkMobileStatus() {
-  if (useIsMobile() == true) {
+  if (true) {
     alert("yay");
   }
   else {
