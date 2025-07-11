@@ -127,6 +127,7 @@ const MapComponent = () => {
           };
           setMapCenter(pos);
           setZoom(16);
+          console.log(useIsMobile());
         },
         () => {
           alert("error could do pos");
