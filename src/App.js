@@ -63,9 +63,9 @@ function useIsMobile() {
    * Event handler for media query changes.
    * Updates the isMobile state based on whether the media query currently matches.
    */
-  //const handleChange = () => {
-  //  setIsMobile(mediaQuery.matches);
-  //};
+  const handleChange = () => {
+    setIsMobile(mediaQuery.matches);
+  };
 
   // Set the initial state based on the current window size
   //handleChange();
