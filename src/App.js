@@ -11,23 +11,7 @@ import forgeLogo from './components/images/waforge logo.svg';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyD6HMsrIQ2aL0WOAUuIBnGtNoyGZsr726w';
 
-const useCheckMobileScreen = () => {
-    const [width, setWidth] = useState(window.innerWidth);
-    const handleWindowSizeChange = () => {
-            setWidth(window.innerWidth);
-    }
-
-    useEffect(() => {
-        window.addEventListener('resize', handleWindowSizeChange);
-        return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
-        }
-    }, []);
-
-    return (width <= 768);
-}
-
-export default useCheckMobileScreen
+const MOBILE_BREAKPOINT = 768;
 
 let infoWindow;
 
@@ -59,6 +43,45 @@ const speeds = {
   motorcycle: 70,
   airplane: 500,
 };
+
+function useIsMobile() {
+  // Initialize isMobile state. Default to false for SSR compatibility
+  // or until the client-side window object is available.
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if window object is available (prevents issues during Server-Side Rendering)
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    // Create a MediaQueryList object for the mobile breakpoint
+    // The query targets screens with a maximum width of MOBILE_BREAKPOINT - 1 pixels.
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+
+    /**
+     * Event handler for media query changes.
+     * Updates the isMobile state based on whether the media query currently matches.
+     */
+    const handleChange = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    // Set the initial state based on the current window size
+    handleChange();
+
+    // Add an event listener to update the state whenever the media query match status changes
+    mediaQuery.addEventListener('change', handleChange);
+
+    // Cleanup function: remove the event listener when the component unmounts
+    // This prevents memory leaks.
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  return isMobile;
+}
 
 const MapComponent = () => {
   const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
@@ -104,6 +127,7 @@ const MapComponent = () => {
           };
           setMapCenter(pos);
           setZoom(16);
+          console.log(useIsMobile());
         },
         () => {
           alert("error could do pos");
