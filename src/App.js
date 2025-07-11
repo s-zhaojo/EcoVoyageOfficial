@@ -44,15 +44,12 @@ const speeds = {
   airplane: 500,
 };
 
-function duh() {
-  return false;
-}
-
 function useIsMobile() {
   // Initialize isMobile state. Default to false for SSR compatibility
   // or until the client-side window object is available.
   const [isMobile, setIsMobile] = useState(false);
 
+  /**
   // Check if window object is available (prevents issues during Server-Side Rendering)
   if (typeof window === 'undefined') {
     return;
@@ -62,10 +59,8 @@ function useIsMobile() {
   // The query targets screens with a maximum width of MOBILE_BREAKPOINT - 1 pixels.
   const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
 
-  /**
-   * Event handler for media query changes.
-   * Updates the isMobile state based on whether the media query currently matches.
-   */
+  // Event handler for media query changes.
+  // Updates the isMobile state based on whether the media query currently matches.
   const handleChange = () => {
     setIsMobile(mediaQuery.matches);
   };
@@ -81,7 +76,7 @@ function useIsMobile() {
   return () => {
     mediaQuery.removeEventListener('change', handleChange);
   };
-  
+  */
 
   return isMobile;
 }
@@ -223,7 +218,7 @@ const MapComponent = () => {
         <div className="sidebar">
           <div className="card">
             <button onClick={setLocation}>get location</button>
-            <button onClick={() => {duh()}}></button>
+            <button onClick={() => {useIsMobile()}}></button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
