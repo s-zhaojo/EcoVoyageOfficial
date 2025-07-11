@@ -47,7 +47,7 @@ const speeds = {
 function useIsMobile() {
   // Initialize isMobile state. Default to false for SSR compatibility
   // or until the client-side window object is available.
-  const [isMobile, setIsMobile] = useState(false);
+  //const [isMobile, setIsMobile] = useState(false);
 
   /**
   // Check if window object is available (prevents issues during Server-Side Rendering)
@@ -78,7 +78,7 @@ function useIsMobile() {
   };
   */
 
-  return isMobile;
+  return false;
 }
 
 const MapComponent = () => {
