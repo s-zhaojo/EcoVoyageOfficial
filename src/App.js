@@ -44,20 +44,6 @@ const speeds = {
   airplane: 500,
 };
 
-function useIsMobile() {
-  return false;
-}
-
-
-function checkMobileStatus() {
-  if (useIsMobile() == true) {
-    alert("yay");
-  }
-  else {
-    alert("nay");
-  }
-}
-
 const MapComponent = () => {
   const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [zoom, setZoom] = useState(10);
@@ -80,6 +66,20 @@ const MapComponent = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  function useIsMobile() {
+    return false;
+  }
+
+
+  function checkMobileStatus() {
+    if (useIsMobile() == true) {
+      alert("yay");
+    }
+    else {
+      alert("nay");
+    }
+  }
 
   const handleLoginClick = () => {
     if (isLoggedIn) {
