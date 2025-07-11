@@ -81,6 +81,15 @@ function useIsMobile() {
   return false;
 }
 
+function checkMobileStatus() {
+  if (useIsMobile() == true) {
+    alert("yay");
+  }
+  else {
+    alert("nay");
+  }
+}
+
 const MapComponent = () => {
   const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [zoom, setZoom] = useState(10);
@@ -218,7 +227,7 @@ const MapComponent = () => {
         <div className="sidebar">
           <div className="card">
             <button onClick={setLocation}>get location</button>
-            <button onClick={() => {useIsMobile()}}></button>
+            <button onClick={checkMobileStatus()}>Check status</button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
