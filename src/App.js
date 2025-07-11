@@ -43,8 +43,9 @@ const speeds = {
   motorcycle: 70,
   airplane: 500,
 };
-/**
+
 function useIsMobile() {
+  /**
   // Initialize isMobile state. Default to false for SSR compatibility
   // or until the client-side window object is available.
   //const [isMobile, setIsMobile] = useState(false);
@@ -76,14 +77,14 @@ function useIsMobile() {
   return () => {
     mediaQuery.removeEventListener('change', handleChange);
   };
-  
+  */
 
   return false;
 }
-*/
+
 
 function checkMobileStatus() {
-  if (true) {
+  if (useIsMobile() == true) {
     alert("yay");
   }
   else {
