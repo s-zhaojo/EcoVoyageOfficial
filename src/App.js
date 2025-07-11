@@ -57,7 +57,7 @@ function useIsMobile() {
 
   // Create a MediaQueryList object for the mobile breakpoint
   // The query targets screens with a maximum width of MOBILE_BREAKPOINT - 1 pixels.
-  //const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+  const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
 
   /**
    * Event handler for media query changes.
