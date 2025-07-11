@@ -49,7 +49,7 @@ function useIsMobile() {
   // or until the client-side window object is available.
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect{() => {
+  useEffect = () => {
     // Check if window object is available (prevents issues during Server-Side Rendering)
     if (typeof window === 'undefined') {
       return;
@@ -78,7 +78,7 @@ function useIsMobile() {
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
-  }};
+  }
   
 
   return isMobile;
