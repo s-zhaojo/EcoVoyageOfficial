@@ -49,36 +49,7 @@ function useIsMobile() {
   // or until the client-side window object is available.
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    // Check if window object is available (prevents issues during Server-Side Rendering)
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    // Create a MediaQueryList object for the mobile breakpoint
-    // The query targets screens with a maximum width of MOBILE_BREAKPOINT - 1 pixels.
-    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-
-    /**
-     * Event handler for media query changes.
-     * Updates the isMobile state based on whether the media query currently matches.
-     */
-    const handleChange = () => {
-      setIsMobile(mediaQuery.matches);
-    };
-
-    // Set the initial state based on the current window size
-    handleChange();
-
-    // Add an event listener to update the state whenever the media query match status changes
-    mediaQuery.addEventListener('change', handleChange);
-
-    // Cleanup function: remove the event listener when the component unmounts
-    // This prevents memory leaks.
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  
 
   return isMobile;
 }
