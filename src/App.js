@@ -68,7 +68,7 @@ function useIsMobile() {
   };
 
   // Set the initial state based on the current window size
-  //handleChange();
+  handleChange();
 
   // Add an event listener to update the state whenever the media query match status changes
   //mediaQuery.addEventListener('change', handleChange);
