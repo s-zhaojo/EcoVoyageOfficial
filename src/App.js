@@ -44,6 +44,10 @@ const speeds = {
   airplane: 500,
 };
 
+function duh() {
+  return false;
+}
+
 function useIsMobile() {
   // Initialize isMobile state. Default to false for SSR compatibility
   // or until the client-side window object is available.
@@ -219,7 +223,7 @@ const MapComponent = () => {
         <div className="sidebar">
           <div className="card">
             <button onClick={setLocation}>get location</button>
-            <button onClick={() => {useIsMobile()}}></button>
+            <button onClick={() => {duh()}}></button>
             <img src={forgeLogo} alt="BALLOONS" className="forgeLogo" />
             <h3>{isLoggedIn ? `Welcome ${username}!` : "Please Login:"}</h3>
             <button onClick={handleLoginClick} className="loginButton">
