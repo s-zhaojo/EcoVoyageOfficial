@@ -71,13 +71,13 @@ function useIsMobile() {
   handleChange();
 
   // Add an event listener to update the state whenever the media query match status changes
-  //mediaQuery.addEventListener('change', handleChange);
+  mediaQuery.addEventListener('change', handleChange);
 
   // Cleanup function: remove the event listener when the component unmounts
   // This prevents memory leaks.
-  //return () => {
-  //  mediaQuery.removeEventListener('change', handleChange);
-  //};
+  return () => {
+    mediaQuery.removeEventListener('change', handleChange);
+  };
   
 
   return isMobile;
